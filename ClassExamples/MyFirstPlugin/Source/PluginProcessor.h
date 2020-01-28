@@ -56,6 +56,11 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 private:
+    
+    // Declare variable to use in PluginProcessor
+    float inputSample;
+    float halfWaveRectify(float x); // Declaring function
+    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MyFirstPluginAudioProcessor)
 };
