@@ -55,6 +55,9 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    float gainMultiplier = 1.0f;
+    float polarityMultiplier = 1.0f;
+    
 private:
     
     // Declare variable to use in PluginProcessor

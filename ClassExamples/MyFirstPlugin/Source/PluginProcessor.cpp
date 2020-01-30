@@ -151,7 +151,7 @@ void MyFirstPluginAudioProcessor::processBlock (AudioBuffer<float>& buffer, Midi
             
             // Write one sample to the output
             //buffer.getWritePointer(channel)[n] = 0.125f * inputSample;
-            buffer.getWritePointer(channel)[n] = inputSample;
+            buffer.getWritePointer(channel)[n] = polarityMultiplier * gainMultiplier * inputSample;
             
         }
         
