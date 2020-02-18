@@ -12,7 +12,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-MyFirstPluginAudioProcessor::MyFirstPluginAudioProcessor()
+TremoloAudioProcessor::TremoloAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
@@ -26,17 +26,17 @@ MyFirstPluginAudioProcessor::MyFirstPluginAudioProcessor()
 {
 }
 
-MyFirstPluginAudioProcessor::~MyFirstPluginAudioProcessor()
+TremoloAudioProcessor::~TremoloAudioProcessor()
 {
 }
 
 //==============================================================================
-const String MyFirstPluginAudioProcessor::getName() const
+const String TremoloAudioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
-bool MyFirstPluginAudioProcessor::acceptsMidi() const
+bool TremoloAudioProcessor::acceptsMidi() const
 {
    #if JucePlugin_WantsMidiInput
     return true;
@@ -45,7 +45,7 @@ bool MyFirstPluginAudioProcessor::acceptsMidi() const
    #endif
 }
 
-bool MyFirstPluginAudioProcessor::producesMidi() const
+bool TremoloAudioProcessor::producesMidi() const
 {
    #if JucePlugin_ProducesMidiOutput
     return true;
@@ -54,7 +54,7 @@ bool MyFirstPluginAudioProcessor::producesMidi() const
    #endif
 }
 
-bool MyFirstPluginAudioProcessor::isMidiEffect() const
+bool TremoloAudioProcessor::isMidiEffect() const
 {
    #if JucePlugin_IsMidiEffect
     return true;
@@ -63,50 +63,53 @@ bool MyFirstPluginAudioProcessor::isMidiEffect() const
    #endif
 }
 
-double MyFirstPluginAudioProcessor::getTailLengthSeconds() const
+double TremoloAudioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
-int MyFirstPluginAudioProcessor::getNumPrograms()
+int TremoloAudioProcessor::getNumPrograms()
 {
     return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
                 // so this should be at least 1, even if you're not really implementing programs.
 }
 
-int MyFirstPluginAudioProcessor::getCurrentProgram()
+int TremoloAudioProcessor::getCurrentProgram()
 {
     return 0;
 }
 
-void MyFirstPluginAudioProcessor::setCurrentProgram (int index)
+void TremoloAudioProcessor::setCurrentProgram (int index)
 {
 }
 
-const String MyFirstPluginAudioProcessor::getProgramName (int index)
+const String TremoloAudioProcessor::getProgramName (int index)
 {
     return {};
 }
 
-void MyFirstPluginAudioProcessor::changeProgramName (int index, const String& newName)
+void TremoloAudioProcessor::changeProgramName (int index, const String& newName)
 {
 }
 
 //==============================================================================
-void MyFirstPluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void TremoloAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+    
+    tremolo.setFs(sampleRate);
+    
 }
 
-void MyFirstPluginAudioProcessor::releaseResources()
+void TremoloAudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool MyFirstPluginAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+bool TremoloAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
   #if JucePlugin_IsMidiEffect
     ignoreUnused (layouts);
@@ -129,35 +132,32 @@ bool MyFirstPluginAudioProcessor::isBusesLayoutSupported (const BusesLayout& lay
 }
 #endif
 
-void MyFirstPluginAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
+void TremoloAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
     ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-   
+    // In case we have more outputs than inputs, this code clears any output
+    // channels that didn't contain input data, (because these aren't
+    // guaranteed to be empty - they may contain garbage).
+    // This is here to avoid people getting screaming feedback
+    // when they first compile a plugin, but obviously you don't need to keep
+    // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    // Only update drive once per buffer
-    distortion1.setDrive(gainMultiplier);
+   
+    tremolo.setDepth(depth);
+    tremolo.setSpeed(speed);
     
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         
         for (int n = 0; n < buffer.getNumSamples(); n++){
-            // Read one sample at a time
-            inputSample = buffer.getReadPointer(channel)[n];
+            float x = buffer.getReadPointer(channel)[n];
             
-            //inputSample = halfWaveRectify(inputSample);
-            
-            
-            
-            inputSample = distortion1.processSample(inputSample);
-            
-            // Write one sample to the output
-            //buffer.getWritePointer(channel)[n] = 0.125f * inputSample;
-            buffer.getWritePointer(channel)[n] = polarityMultiplier * inputSample;
+            buffer.getWritePointer(channel)[n] = tremolo.processSample(x);
             
         }
         
@@ -166,25 +166,25 @@ void MyFirstPluginAudioProcessor::processBlock (AudioBuffer<float>& buffer, Midi
 }
 
 //==============================================================================
-bool MyFirstPluginAudioProcessor::hasEditor() const
+bool TremoloAudioProcessor::hasEditor() const
 {
     return true; // (change this to false if you choose to not supply an editor)
 }
 
-AudioProcessorEditor* MyFirstPluginAudioProcessor::createEditor()
+AudioProcessorEditor* TremoloAudioProcessor::createEditor()
 {
-    return new MyFirstPluginAudioProcessorEditor (*this);
+    return new TremoloAudioProcessorEditor (*this);
 }
 
 //==============================================================================
-void MyFirstPluginAudioProcessor::getStateInformation (MemoryBlock& destData)
+void TremoloAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
 }
 
-void MyFirstPluginAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void TremoloAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
@@ -194,16 +194,5 @@ void MyFirstPluginAudioProcessor::setStateInformation (const void* data, int siz
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new MyFirstPluginAudioProcessor();
+    return new TremoloAudioProcessor();
 }
-
-
-
-float MyFirstPluginAudioProcessor::halfWaveRectify(float x){
-    
-    if (x < 0){
-        x = 0.0f;
-    }
-    return x;
-}
-

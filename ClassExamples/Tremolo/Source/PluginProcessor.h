@@ -11,17 +11,17 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "Distortion.hpp"
+#include "Tremolo.hpp"
 
 //==============================================================================
 /**
 */
-class MyFirstPluginAudioProcessor  : public AudioProcessor
+class TremoloAudioProcessor  : public AudioProcessor
 {
 public:
     //==============================================================================
-    MyFirstPluginAudioProcessor();
-    ~MyFirstPluginAudioProcessor();
+    TremoloAudioProcessor();
+    ~TremoloAudioProcessor();
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -56,19 +56,16 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
-    float gainMultiplier = 1.0f;
-    float polarityMultiplier = 1.0f;
+    float depth = 50.f;
+    float speed = 2.0f;
+    
     
 private:
     
-    // Declare variable to use in PluginProcessor
-    float inputSample;
-    float halfWaveRectify(float x); // Declaring function
-    
-    Distortion distortion1;
+    Tremolo tremolo;
     
     
     
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MyFirstPluginAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TremoloAudioProcessor)
 };

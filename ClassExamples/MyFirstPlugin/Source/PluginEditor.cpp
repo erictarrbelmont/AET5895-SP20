@@ -22,7 +22,7 @@ MyFirstPluginAudioProcessorEditor::MyFirstPluginAudioProcessorEditor (MyFirstPlu
     gainSlider.addListener(this);
     gainSlider.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
     gainSlider.setBounds(300,100,150,150);
-    gainSlider.setRange(0.0f,2.0f);
+    gainSlider.setRange(1.0f,10.0f);
     gainSlider.setValue(processor.gainMultiplier);
     gainSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 30);
     addAndMakeVisible(gainSlider);

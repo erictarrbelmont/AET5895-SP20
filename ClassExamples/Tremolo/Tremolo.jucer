@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="BZLl0L" name="MyFirstPlugin" projectType="audioplug" jucerVersion="5.4.5"
-              pluginFormats="buildAU,buildStandalone">
-  <MAINGROUP id="JKAEdx" name="MyFirstPlugin">
-    <GROUP id="{11DA5600-D8A3-F0E4-452F-4CA4D6277028}" name="Source">
-      <FILE id="AAmV7s" name="PluginProcessor.cpp" compile="1" resource="0"
+<JUCERPROJECT id="Jkcs2Y" name="Tremolo" projectType="audioplug" jucerVersion="5.4.5"
+              pluginFormats="buildAU">
+  <MAINGROUP id="VBXcnt" name="Tremolo">
+    <GROUP id="{B8B23EE4-B8CE-10F1-3DDB-FDE8F0589E39}" name="Source">
+      <FILE id="B3bHFh" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
-      <FILE id="X6DwhS" name="PluginProcessor.h" compile="0" resource="0"
+      <FILE id="QusruT" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
-      <FILE id="qB7Iaf" name="PluginEditor.cpp" compile="1" resource="0"
+      <FILE id="VsGgHV" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
-      <FILE id="tCaI9h" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
-      <FILE id="sfTaEH" name="Distortion.cpp" compile="1" resource="0" file="Source/Distortion.cpp"/>
-      <FILE id="DypDAx" name="Distortion.hpp" compile="0" resource="0" file="Source/Distortion.hpp"/>
+      <FILE id="S3o3b8" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="rrYcVf" name="Tremolo.cpp" compile="1" resource="0" file="Source/Tremolo.cpp"/>
+      <FILE id="bVL73Z" name="Tremolo.hpp" compile="0" resource="0" file="Source/Tremolo.hpp"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
