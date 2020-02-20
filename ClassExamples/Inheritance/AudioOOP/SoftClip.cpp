@@ -13,10 +13,6 @@ SoftClip::SoftClip(){
    // No need to do anything with default constructor
 }
 
-SoftClip::SoftClip(float drive){
-    this->drive = drive;
-}
-
 // Destructor
 SoftClip::~SoftClip(){
     //cout << "Destructor called" << endl;

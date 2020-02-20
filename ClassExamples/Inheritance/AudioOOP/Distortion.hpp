@@ -20,15 +20,19 @@ public:
     
     // Constructor function (special function - no return type, name = Class name)
     Distortion();
-    Distortion(float drive);
     
     // Destructor
     ~Distortion();
     
     // Add "virtual" keyword so that we can override in sub class
-    virtual void processSignal(vector<float> & signal, int numSamples);
+    
+    // Pure virtual function must be overriden
+    virtual void processSignal(vector<float> & signal, int numSamples) = 0; // 0 makes it "pure"
 
-    virtual void setDrive(float drive);
+    // Not a pure virtual, includes implementation
+    virtual void setDrive(float drive){
+        this->drive = drive;
+    };
     
 private:
     

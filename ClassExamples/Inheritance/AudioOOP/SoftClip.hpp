@@ -21,19 +21,22 @@ public:
     
     // Constructor function (special function - no return type, name = Class name)
     SoftClip();
-    SoftClip(float drive);
     
     // Destructor
     ~SoftClip();
     
+    // Because this is a "pure" virtual function in base class,
+    // we must implement it in derive class
     void processSignal(vector<float> & signal, int numSamples) override;
 
+    // It is not necessary to implement, but we can if we want
     void setDrive(float drive) override;
+    
+    void newMethod(); // Methods don't need to be in base class.
     
 private:
     
     float drive = 1.0f;
-    
 };
 
 
