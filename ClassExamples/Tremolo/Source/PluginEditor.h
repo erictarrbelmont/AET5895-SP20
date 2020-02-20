@@ -17,7 +17,8 @@
 /**
 */
 class TremoloAudioProcessorEditor  : public AudioProcessorEditor,
-                                     public Slider::Listener
+                                     public Slider::Listener,
+                                     public ComboBox::Listener
                                      //public Button::Listener
 {
 public:
@@ -29,6 +30,7 @@ public:
     void resized() override;
 
     void sliderValueChanged(Slider* slider) override;
+    void comboBoxChanged(ComboBox * comboBox) override;
     
 private:
     // This reference is provided as a quick way for your editor to
@@ -37,6 +39,8 @@ private:
 
     Slider speedSlider;
     Slider depthSlider;
+    
+    ComboBox lfoMenu;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TremoloAudioProcessorEditor)
 };

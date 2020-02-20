@@ -59,7 +59,7 @@ public:
     float depth = 50.f;
     float speed = 2.0f;
     
-    
+    Tremolo::LFOType lfoSelect = Tremolo::LFOType::sinewave;
 private:
     
     Tremolo tremolo;

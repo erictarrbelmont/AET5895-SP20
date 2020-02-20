@@ -23,6 +23,8 @@ public:
     // Destructor
     ~Tremolo();
     
+    enum LFOType{ sinewave, squarewave};
+    
     void processSignal(vector<float> & signal, int numSamples);
     
     float processSample(float x);
@@ -30,6 +32,8 @@ public:
     void setFs(float Fs);
     void setSpeed(float speed);
     void setDepth(float depth);
+    
+    LFOType lfoSelector = sinewave;
     
 private:
     
@@ -43,6 +47,8 @@ private:
     
     float currentAngle = 0.0f;
     float angleChange = speed * (1.f/Fs) * 2 * M_PI;
+    
+    
     
 };
 

@@ -34,6 +34,15 @@ TremoloAudioProcessorEditor::TremoloAudioProcessorEditor (TremoloAudioProcessor&
     depthSlider.setRange(0.0f,100.f);
     addAndMakeVisible(depthSlider);
     
+    
+    lfoMenu.addListener(this);
+    lfoMenu.addItem("Sine wave", 1);
+    lfoMenu.addItem("Square wave", 2);
+    lfoMenu.setText("Select LFO");
+    lfoMenu.setBounds(150,50,150,40);
+    addAndMakeVisible(lfoMenu);
+    
+    
 }
 
 TremoloAudioProcessorEditor::~TremoloAudioProcessorEditor()
@@ -69,3 +78,16 @@ void TremoloAudioProcessorEditor::sliderValueChanged(Slider * slider){
     
 }
 
+void TremoloAudioProcessorEditor::comboBoxChanged(ComboBox * comboBox){
+        
+    if (comboBox == &lfoMenu){
+        int selection = lfoMenu.getSelectedId();
+        if (selection == 1){
+            processor.lfoSelect = Tremolo::LFOType::sinewave;
+        }
+        else{
+            processor.lfoSelect = Tremolo::LFOType::squarewave;
+        }
+    }
+    
+}

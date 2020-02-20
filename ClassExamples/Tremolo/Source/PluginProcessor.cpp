@@ -147,7 +147,12 @@ void TremoloAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-   
+    
+    //lfoSelect = Tremolo::LFOType::squarewave;
+    // NOTE: lfoSelect is updated in the PluginEditor
+    
+    tremolo.lfoSelector = lfoSelect;
+    
     tremolo.setDepth(depth);
     tremolo.setSpeed(speed);
     

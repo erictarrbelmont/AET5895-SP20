@@ -11,8 +11,15 @@
 using namespace std;
 
 void fullwaveRectify(vector<float> &x);
+void halfwaveRectify(vector<float> &x);
 
 void fullwaveRectify(vector<vector<float>> &x);
+
+// Enumerated List
+enum DistortionTypes {
+    fullwave, halfwave
+};
+
 
 
 int main() {
@@ -21,11 +28,28 @@ int main() {
     int Fs;
     int bitDepth;
     int numChannels;
-    vector<vector<float>> signal;
+    vector<float> signal;
+    //vector<vector<float>> signal;
     
     audioread(filename,signal,Fs,bitDepth,numChannels);
     
-    fullwaveRectify(signal);
+    DistortionTypes distortionSelect = fullwave;
+    
+    switch (distortionSelect) {
+        case fullwave:
+            fullwaveRectify(signal);
+            break;
+            
+        case halfwave:
+            halfwaveRectify(signal);
+            break;
+            
+        default:
+            fullwaveRectify(signal);
+            break;
+    }
+    
+    //fullwaveRectify(signal);
     
     string outName = "Test.wav";
     
@@ -62,3 +86,16 @@ void fullwaveRectify(vector<vector<float>> & x){
 }
 
 
+
+void halfwaveRectify(vector<float> & x){
+    int N = x.size();
+    
+    for (int n=0 ; n < N ; n++){
+        
+        if (x[n] < 0.0f){
+            //x[n] = abs(x[n]);
+            x[n] = 0.0f;
+        }
+        
+    }
+}

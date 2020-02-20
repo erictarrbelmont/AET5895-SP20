@@ -35,7 +35,24 @@ float Tremolo::processSample(float x){
     
     float lfo;
     
-    lfo = amp * sin(currentAngle) + offset;
+    switch (lfoSelector) {
+        case sinewave:
+            lfo = amp * sin(currentAngle) + offset;
+            break;
+        
+        case squarewave:
+            if (currentAngle < M_PI){
+                lfo = 1.0f;
+            }
+            else{
+                lfo = 1.0f - 2.0f*amp;
+            }
+            break;
+        default:
+            lfo = amp * sin(currentAngle) + offset;
+            break;
+    }
+    
     
     currentAngle += angleChange;
     if (currentAngle > 2.f * M_PI){
