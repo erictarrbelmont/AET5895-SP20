@@ -1,27 +1,29 @@
 //
-//  FractionalDelay.hpp
+//  FBCF.hpp
 //
 //  Created by Eric Tarr on 2/6/20.
 //  Copyright © 2020 Eric Tarr. All rights reserved.
 //
 
-#ifndef FractionalDelay_hpp
-#define FractionalDelay_hpp
+#ifndef FBCF_hpp
+#define FBCF_hpp
 
 #include <cmath>
 #include <vector>
+#include "FractionalDelay.hpp"
+
 using namespace std;
 
-class FractionalDelay {
+class FBCF {
     
 public:
     
     // Constructor function (special function - no return type, name = Class name)
-    FractionalDelay();
-    //Distortion(float drive);
+    FBCF();
+    FBCF(float delay,float speed);
     
     // Destructor
-    ~FractionalDelay();
+    ~FBCF();
     
     void processSignal(float * signal, int numSamples, int channel);
     
@@ -33,7 +35,7 @@ public:
     
     void setSpeed(float speed);
     void setDepth(float depth);
-
+    void setGain(float gain);
     
 private:
     
@@ -41,20 +43,14 @@ private:
     
     float delay = 5.f;
     
-    const int MAX_BUFFER_SIZE = 30;
-    float delayBuffer[30][2] = {0.0f};
-    int index[2] = {0};
+    FractionalDelay fractionalDelay;
+    
+    float delaySample = 0.0f;
     
     float speed = 1.0f; // Hz, frequency of LFO
     float depth = 10.0f; // percentage of intensity, control amp of LFO
     
-    float amp = depth;
-    float offset = amp+1.0f;
-    
-    float currentAngle = 0.0f;
-    float angleChange = speed * (1.f/Fs) * 2 * M_PI;
-    
-    
+    float gain = 0.5f;
     
 };
 

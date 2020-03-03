@@ -11,6 +11,8 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "FractionalDelay.hpp"
+#include "FBCF.hpp"
 
 //==============================================================================
 /**
@@ -55,7 +57,18 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    
+    float rate;
+    float depth;
+    float wet;
+    
 private:
+    
+    //FractionalDelay fractionalDelay;
+    //   fbcf(delay samples, frequency LFO)
+    FBCF fbcf1();//(1782.f,1.52f);
+    FBCF fbcf2(); //(2181.f,1.38f);
+    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ModDelayAudioProcessor)
 };
