@@ -16,15 +16,6 @@ FractionalDelay::~FractionalDelay(){
 }
 
 
-//void FractionalDelay::processSignal(vector<float> & signal, int numSamples, int channel){
-//    // Where we do our effect
-//    for (int n = 0; n < numSamples ; n++){
-//        
-//        float x = signal[n];
-//        signal[n] = processSample(x,channel);
-//    }
-//}
-
 float FractionalDelay::processSample(float x, int channel){
     
     float lfo;

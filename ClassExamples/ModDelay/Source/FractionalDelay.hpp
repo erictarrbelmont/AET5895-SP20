@@ -9,7 +9,6 @@
 #define FractionalDelay_hpp
 
 #include <cmath>
-#include <vector>
 using namespace std;
 
 class FractionalDelay {
@@ -18,12 +17,9 @@ public:
     
     // Constructor function (special function - no return type, name = Class name)
     FractionalDelay();
-    //Distortion(float drive);
     
     // Destructor
     ~FractionalDelay();
-    
-    void processSignal(float * signal, int numSamples, int channel);
     
     float processSample(float x,int channel);
 
@@ -41,8 +37,8 @@ private:
     
     float delay = 5.f;
     
-    const int MAX_BUFFER_SIZE = 30;
-    float delayBuffer[30][2] = {0.0f};
+    const int MAX_BUFFER_SIZE = 96000;
+    float delayBuffer[96000][2] = {0.0f};
     int index[2] = {0};
     
     float speed = 1.0f; // Hz, frequency of LFO

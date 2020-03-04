@@ -66,8 +66,8 @@ private:
     
     //FractionalDelay fractionalDelay;
     //   fbcf(delay samples, frequency LFO)
-    FBCF fbcf1();//(1782.f,1.52f);
-    FBCF fbcf2(); //(2181.f,1.38f);
+    FBCF fbcf1 {1871.f,1.51f};
+    FBCF fbcf2 {2810.f,1.32f};
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ModDelayAudioProcessor)

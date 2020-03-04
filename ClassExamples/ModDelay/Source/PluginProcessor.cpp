@@ -97,7 +97,7 @@ void ModDelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
-    fractionalDelay.setFs(sampleRate);
+    //fractionalDelay.setFs(sampleRate);
 }
 
 void ModDelayAudioProcessor::releaseResources()
@@ -139,8 +139,8 @@ void ModDelayAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffe
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    fractionalDelay.setDepth(depth);
-    fractionalDelay.setSpeed(rate);
+    //fractionalDelay.setDepth(depth);
+    //fractionalDelay.setSpeed(rate);
     
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
@@ -151,10 +151,11 @@ void ModDelayAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffe
             float x = buffer.getReadPointer(channel)[n];
             
             //float delaySample = fractionalDelay.processSample(x, channel);
-            float out = fbcf1().processSample(x,channel);
+            float out1 = fbcf1.processSample(x,channel);
+            float out2 = fbcf2.processSample(x,channel);
             
-            
-            float y = (1.f - wet) * x + wet;
+            // "x" is the dry path, "out1 and out2" are in parallel 
+            float y = (1.f - wet) * x + wet * (out1+out2);
             
             buffer.getWritePointer(channel)[n] = y;
         }

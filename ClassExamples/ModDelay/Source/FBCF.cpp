@@ -11,7 +11,7 @@
 FBCF::FBCF(){
 }
 
-FBCF::FBCF(float delay, float speed){
+FBCF::FBCF( float delay, float speed):delay(delay),speed(speed){
     fractionalDelay.setDelaySamples(delay);
     fractionalDelay.setSpeed(speed);
 }

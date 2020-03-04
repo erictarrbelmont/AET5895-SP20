@@ -20,12 +20,12 @@ public:
     
     // Constructor function (special function - no return type, name = Class name)
     FBCF();
-    FBCF(float delay,float speed);
+    FBCF(float delay, float speed);
     
     // Destructor
     ~FBCF();
     
-    void processSignal(float * signal, int numSamples, int channel);
+    //void processSignal(float * signal, int numSamples, int channel);
     
     float processSample(float x,int channel);
 
