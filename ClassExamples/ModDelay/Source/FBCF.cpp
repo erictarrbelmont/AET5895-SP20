@@ -27,7 +27,11 @@ float FBCF::processSample(float x, int channel){
     
     delaySample = fractionalDelay.processSample(y, channel);
     
-    return y;
+    // returning "y" puts the delay in the feed-back path
+    //return y;
+    
+    // returning "delaySample" puts the delay block on the thru path
+    return delaySample;
 }
 
 void FBCF::setFs(float Fs){
