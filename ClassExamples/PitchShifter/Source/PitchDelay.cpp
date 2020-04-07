@@ -8,7 +8,19 @@
 #include "PitchDelay.hpp"
 
 
-PitchDelay::PitchDelay(){
+PitchDelay::PitchDelay(int phaseChoice){
+    this->phaseChoice = phaseChoice;
+    if (phaseChoice == 1){
+        delay[0] = 2.f; delay[1] = 2.f;
+    }
+    if (phaseChoice == 2){
+        delay[0] = (float)MAX_DELAY_SAMPLES/3.0f;
+        delay[1] = (float)MAX_DELAY_SAMPLES/3.0f;
+    }
+    if (phaseChoice == 3){
+        delay[0] = 2.f*(float)MAX_DELAY_SAMPLES/3.0f;
+        delay[1] = 2.f*(float)MAX_DELAY_SAMPLES/3.0f;
+    }
 }
 
 // Destructor
@@ -66,6 +78,18 @@ float PitchDelay::processSample(float x, int channel){
 void PitchDelay::setFs(float Fs){
     this->Fs = Fs;
     this->MAX_DELAY_SAMPLES = MAX_DELAY_SEC * Fs;
+    
+    if (phaseChoice == 1){
+        delay[0] = 2.f; delay[1] = 2.f;
+    }
+    if (phaseChoice == 2){
+        delay[0] = (float)MAX_DELAY_SAMPLES/3.0f;
+        delay[1] = (float)MAX_DELAY_SAMPLES/3.0f;
+    }
+    if (phaseChoice == 3){
+        delay[0] = 2.f*(float)MAX_DELAY_SAMPLES/3.0f;
+        delay[1] = 2.f*(float)MAX_DELAY_SAMPLES/3.0f;
+    }
 }
 
 

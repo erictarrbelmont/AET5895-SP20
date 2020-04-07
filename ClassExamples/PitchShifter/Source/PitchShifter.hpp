@@ -1,25 +1,27 @@
 //
-//  PitchDelay.hpp
+//  PitchShifter.hpp
 //
 //  Created by Eric Tarr on 2/6/20.
 //  Copyright © 2020 Eric Tarr. All rights reserved.
 //
 
-#ifndef PitchDelay_hpp
-#define PitchDelay_hpp
+#ifndef PitchShifter_hpp
+#define PitchShifter_hpp
 
 #include <cmath>
+#include "PitchDelay.hpp"
+
 using namespace std;
 
-class PitchDelay {
+class PitchShifter {
     
 public:
     
     // Constructor function (special function - no return type, name = Class name)
-    PitchDelay(int phaseChoice);
+    PitchShifter();
     
     // Destructor
-    ~PitchDelay();
+    ~PitchShifter();
     
     float processSample(float x,int channel);
 
@@ -31,15 +33,19 @@ public:
 private:
     
     float Fs = 48000.f;
-    int phaseChoice;
+    
+    PitchDelay pitchDelay1{1};
+    PitchDelay pitchDelay2{2};
+    PitchDelay pitchDelay3{3};
+
+    float a1[2] = {-M_PI/2.f};
+    float a2[2] = {(-M_PI/2.f) + 2.f*M_PI/3.f};
+    float a3[2] = {(-M_PI/2.f) + 4.f*M_PI/3.f};
+    float angleChange;
+    float freq;
     
     const float MAX_DELAY_SEC = .03f;
     float MAX_DELAY_SAMPLES = MAX_DELAY_SEC * Fs;
-    float delay[2];// = {5.f}; // in samples
-    
-    const int MAX_BUFFER_SIZE = 96000;
-    float delayBuffer[96000][2] = {0.0f};
-    int index[2] = {0};
     
     float semitone = 0.f;
     float tr = 1.f; // momentary trasposition
@@ -49,4 +55,4 @@ private:
 
 
 
-#endif /* PitchDelay_hpp */
+#endif /* PitchShifter_hpp */

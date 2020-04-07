@@ -11,7 +11,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "PitchDelay.hpp"
+#include "PitchShifter.hpp"
 
 //==============================================================================
 /**
@@ -57,6 +57,6 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 private:
-    PitchDelay pitchDelay; //==============================================================================
+    PitchShifter pitchShifter; //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PitchShifterAudioProcessor)
 };

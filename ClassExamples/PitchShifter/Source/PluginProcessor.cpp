@@ -95,7 +95,7 @@ void PitchShifterAudioProcessor::changeProgramName (int index, const String& new
 //==============================================================================
 void PitchShifterAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    pitchDelay.setFs(sampleRate);
+    pitchShifter.setFs(sampleRate);
 }
 
 void PitchShifterAudioProcessor::releaseResources()
@@ -138,12 +138,12 @@ void PitchShifterAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiB
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    pitchDelay.setPitch(-12.0f);
+    pitchShifter.setPitch(-5.0f);
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         for (int n = 0; n < buffer.getNumSamples() ; ++n){
             float x = buffer.getReadPointer(channel)[n];
-            float y = pitchDelay.processSample(x, channel);
+            float y = pitchShifter.processSample(x, channel);
             buffer.getWritePointer(channel)[n] = y;
         }
     }

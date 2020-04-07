@@ -13,6 +13,10 @@
       <FILE id="J7yhQZ" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
       <FILE id="Fy4711" name="PitchDelay.cpp" compile="1" resource="0" file="/Users/erictarr/AET5895-SP20/ClassExamples/PitchShifter/Source/PitchDelay.cpp"/>
       <FILE id="PWkKjO" name="PitchDelay.hpp" compile="0" resource="0" file="/Users/erictarr/AET5895-SP20/ClassExamples/PitchShifter/Source/PitchDelay.hpp"/>
+      <FILE id="KJL0Sw" name="PitchShifter.cpp" compile="1" resource="0"
+            file="Source/PitchShifter.cpp"/>
+      <FILE id="sYAnM0" name="PitchShifter.hpp" compile="0" resource="0"
+            file="Source/PitchShifter.hpp"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
