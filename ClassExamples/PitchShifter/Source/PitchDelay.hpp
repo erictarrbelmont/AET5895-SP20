@@ -21,7 +21,7 @@ public:
     // Destructor
     ~PitchDelay();
     
-    float processSample(float x,int channel);
+    float processSample(float x,int channel,float & angle);
 
     void setFs(float Fs);
     

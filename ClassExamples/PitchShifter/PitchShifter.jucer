@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="GIlwKG" name="PitchShifter" projectType="audioplug" jucerVersion="5.4.5"
-              pluginFormats="buildAU">
+              pluginFormats="buildAU,buildVST3">
   <MAINGROUP id="m2G16h" name="PitchShifter">
     <GROUP id="{7F49FD4F-467F-4411-BA4E-09A6B605B4FE}" name="Source">
       <FILE id="Mj8IpA" name="PluginProcessor.cpp" compile="1" resource="0"

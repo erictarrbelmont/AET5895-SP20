@@ -28,7 +28,7 @@ PitchDelay::~PitchDelay(){
 }
 
 
-float PitchDelay::processSample(float x, int channel){
+float PitchDelay::processSample(float x, int channel, float & angle){
     
 //    if (delay[channel] < 1.f){
 //        return x;
@@ -38,9 +38,11 @@ float PitchDelay::processSample(float x, int channel){
         delay[channel] += delta;
         if (delta <= 0.f && delay[channel] < 2.f){
             delay[channel] = MAX_DELAY_SAMPLES;
+            angle = 1.5f*M_PI;
         }
-        if (delta >= 0.f && delay[channel] > MAX_DELAY_SAMPLES){
+        if (delta > 0.f && delay[channel] > MAX_DELAY_SAMPLES){
             delay[channel] = 2.0f;
+            angle = 1.5f*M_PI;
         }
         
         // Delay Buffer

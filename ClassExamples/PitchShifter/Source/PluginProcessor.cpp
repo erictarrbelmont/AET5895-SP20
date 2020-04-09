@@ -138,7 +138,7 @@ void PitchShifterAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiB
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    pitchShifter.setPitch(-5.0f);
+    pitchShifter.setPitch(pitchValue);
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         for (int n = 0; n < buffer.getNumSamples() ; ++n){

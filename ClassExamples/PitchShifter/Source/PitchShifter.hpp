@@ -38,9 +38,11 @@ private:
     PitchDelay pitchDelay2{2};
     PitchDelay pitchDelay3{3};
 
-    float a1[2] = {-M_PI/2.f};
-    float a2[2] = {(-M_PI/2.f) + 2.f*M_PI/3.f};
-    float a3[2] = {(-M_PI/2.f) + 4.f*M_PI/3.f};
+    float a1[2] = {1.5f*M_PI,1.5f*M_PI};
+    float a2[2] = {(1.5f*M_PI) + 2.f*M_PI/3.f ,
+                    (1.5f*M_PI) + 2.f*M_PI/3.f};
+    float a3[2] = {(1.5f*M_PI) + 4.f*M_PI/3.f ,
+                     (1.5f*M_PI) + 4.f*M_PI/3.f};
     float angleChange;
     float freq;
     
