@@ -19,13 +19,15 @@ PitchShifterAudioProcessorEditor::PitchShifterAudioProcessorEditor (PitchShifter
     // editor's size to whatever you need it to be.
     setSize (400, 300);
     
-    pitchKnob.addListener(this);
+    //pitchKnob.addListener(this);
     pitchKnob.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
     pitchKnob.setBounds(50,74,100,100);
     pitchKnob.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 30);
     pitchKnob.setRange(-12.0f,12.f,0.1f);
-    pitchKnob.setValue(0.f);
+    //pitchKnob.setValue(0.f);
     addAndMakeVisible(pitchKnob);
+    
+    sliderAttachment = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.state,"PITCH",pitchKnob);
 }
 
 PitchShifterAudioProcessorEditor::~PitchShifterAudioProcessorEditor()
@@ -49,9 +51,6 @@ void PitchShifterAudioProcessorEditor::resized()
     // subcomponents in your editor..
 }
 
-void PitchShifterAudioProcessorEditor::sliderValueChanged(Slider * slider){
+void PitchShifterAudioProcessorEditor::sliderValueChanged(Slider *slider){
     
-    if (slider == &pitchKnob){
-        processor.pitchValue = pitchKnob.getValue();
-    }
 }

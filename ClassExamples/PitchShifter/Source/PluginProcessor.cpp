@@ -21,13 +21,23 @@ PitchShifterAudioProcessor::PitchShifterAudioProcessor()
                       #endif
                        .withOutput ("Output", AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ),state(*this,nullptr,Identifier("PitchParameters"),createParameterLayout())
 #endif
 {
 }
 
 PitchShifterAudioProcessor::~PitchShifterAudioProcessor()
 {
+}
+
+AudioProcessorValueTreeState::ParameterLayout PitchShifterAudioProcessor::createParameterLayout(){
+    
+    std::vector<std::unique_ptr<RangedAudioParameter>> params;
+    
+    params.push_back(std::make_unique<AudioParameterFloat>("PITCH","Pitch",-12.f,12.f,0.f));
+    
+    
+    return {params.begin() , params.end()};
 }
 
 //==============================================================================
@@ -138,6 +148,7 @@ void PitchShifterAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiB
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
+    float pitchValue = *state.getRawParameterValue("PITCH");
     pitchShifter.setPitch(pitchValue);
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
