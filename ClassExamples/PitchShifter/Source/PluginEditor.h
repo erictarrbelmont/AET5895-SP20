@@ -41,7 +41,7 @@ private:
     
     SimpleMeter meter;
     
-    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> sliderAttachment;
+    std::vector<std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment>> sliderAttachment;
     
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PitchShifterAudioProcessorEditor)
