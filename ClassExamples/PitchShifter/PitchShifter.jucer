@@ -17,6 +17,8 @@
             file="Source/PitchShifter.cpp"/>
       <FILE id="sYAnM0" name="PitchShifter.hpp" compile="0" resource="0"
             file="Source/PitchShifter.hpp"/>
+      <FILE id="KUTztn" name="SimpleMeter.h" compile="0" resource="0" file="Source/SimpleMeter.h"/>
+      <FILE id="XrqJI8" name="VUAnalysis.h" compile="0" resource="0" file="Source/VUAnalysis.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>

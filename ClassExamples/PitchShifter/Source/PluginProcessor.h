@@ -12,7 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PitchShifter.hpp"
-
+#include "VUAnalysis.h"
 //==============================================================================
 /**
 */
@@ -61,7 +61,15 @@ public:
     AudioProcessorValueTreeState state;
     AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     
+    std::atomic<float> meterValue;
+    
 private:
-    PitchShifter pitchShifter; //==============================================================================
+    PitchShifter pitchShifter;
+    
+    float gainSmooth = 0.0f;
+    float alpha = 0.995f;
+    VUAnalysis vuAnalysis;
+    float outValue[2] = {0.0f};
+    //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PitchShifterAudioProcessor)
 };

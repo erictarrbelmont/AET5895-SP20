@@ -36,6 +36,7 @@ AudioProcessorValueTreeState::ParameterLayout PitchShifterAudioProcessor::create
     
     params.push_back(std::make_unique<AudioParameterFloat>("PITCH","Pitch",-12.f,12.f,0.f));
     
+    params.push_back(std::make_unique<AudioParameterFloat>("GAIN","Gain",0.f,1.f,1.f));
     
     return {params.begin() , params.end()};
 }
@@ -106,6 +107,7 @@ void PitchShifterAudioProcessor::changeProgramName (int index, const String& new
 void PitchShifterAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     pitchShifter.setFs(sampleRate);
+    vuAnalysis.setSampleRate(sampleRate);
 }
 
 void PitchShifterAudioProcessor::releaseResources()
@@ -150,14 +152,22 @@ void PitchShifterAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiB
 
     float pitchValue = *state.getRawParameterValue("PITCH");
     pitchShifter.setPitch(pitchValue);
+    
+    float gainValue = *state.getRawParameterValue("GAIN");
+    
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         for (int n = 0; n < buffer.getNumSamples() ; ++n){
             float x = buffer.getReadPointer(channel)[n];
             float y = pitchShifter.processSample(x, channel);
-            buffer.getWritePointer(channel)[n] = y;
+            gainSmooth = (1.f-alpha)*gainValue + alpha*gainSmooth;
+            float out = y * gainSmooth;
+            buffer.getWritePointer(channel)[n] = out;
+            // Metering
+            outValue[channel] = vuAnalysis.processSample(out, channel);
         }
     }
+    meterValue = jmax(outValue[0],outValue[1]);
 }
 
 //==============================================================================
@@ -174,15 +184,17 @@ AudioProcessorEditor* PitchShifterAudioProcessor::createEditor()
 //==============================================================================
 void PitchShifterAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
+    auto currentState = state.copyState();
+    std::unique_ptr<XmlElement> xml(currentState.createXml());
+    copyXmlToBinary(*xml, destData);
 }
 
 void PitchShifterAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
+    std::unique_ptr<XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));
+    if(xmlState &&xmlState->hasTagName(state.state.getType())){
+        state.replaceState(ValueTree::fromXml(*xmlState));
+    }
 }
 
 //==============================================================================
